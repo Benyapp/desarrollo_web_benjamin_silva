@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Informar avistamiento - Avistamientos de Aves</title>
+  <link rel="stylesheet" href="css/estilos.css">
+</head>
+<body>
+
+  <header>
+    <h1><a href="index.html">Avistamientos de Aves de Chile</a></h1>
+    <nav>
+      <ul>
+        <li><a href="index.html">Inicio</a></li>
+        <li><a href="registro.html">Registro de voluntario</a></li>
+        <li><a href="avistamiento.html">Informar avistamiento</a></li>
+        <li><a href="listado.html">Listado de avistamientos</a></li>
+        <li><a href="metricas.html">Métricas</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <h1>Informar un avistamiento</h1>
+    <p>
+      Esta sección es exclusiva para voluntarios(as) ya registrados(as) en el sistema
+      (ver <a href="registro.html">registro de voluntario</a>). Los campos marcados con
+      * son obligatorios.
+    </p>
+
+    <form name="avistamiento" onsubmit="return validarAvistamiento();">
+
+      <h2>Identificación del voluntario</h2>
+
+      <p>
+        <label for="voluntario-nombre">Nombre completo *</label><br>
+        <input type="text" id="voluntario-nombre" name="voluntario-nombre" onblur="validarCampoVoluntarioNombre();">
+        <br><span class="mensaje-error" id="voluntario-nombre-error"></span>
+      </p>
+
+      <p>
+        <label for="voluntario-email">Correo con el que te registraste *</label><br>
+        <input type="email" id="voluntario-email" name="voluntario-email" onblur="validarCampoVoluntarioEmail();">
+        <br><span class="mensaje-error" id="voluntario-email-error"></span>
+      </p>
+
+      <h2>Datos del ave</h2>
+
+      <p>
+        <label for="tipo-ave">Tipo de ave *</label><br>
+        <select id="tipo-ave" name="tipo-ave" onchange="validarCampoTipoAve();">
+          <option value="" selected disabled>Seleccione tipo</option>
+        </select>
+        <br><span class="mensaje-error" id="tipo-ave-error"></span>
+      </p>
+
+      <p>
+        <label for="nombre-ave">Nombre del ave *</label><br>
+        <input type="text" id="nombre-ave" name="nombre-ave" onblur="validarCampoNombreAve();" placeholder="Ej: Chercán">
+        <br><span class="mensaje-error" id="nombre-ave-error"></span>
+      </p>
+
+      <p>
+        <label for="cantidad">Cantidad de ejemplares observados (opcional)</label><br>
+        <input type="number" id="cantidad" name="cantidad" min="1" step="1" onblur="validarCampoCantidad();">
+        <br><span class="mensaje-error" id="cantidad-error"></span>
+      </p>
+
+      <h2>Lugar y momento del avistamiento</h2>
+
+      <p>
+        <label for="region-avistamiento">Región *</label><br>
+        <select id="region-avistamiento" name="region-avistamiento" onchange="actualizarComunas('region-avistamiento','comuna-avistamiento'); validarCampoRegionAvistamiento();">
+          <option value="" selected disabled>Seleccione región</option>
+        </select>
+        <br><span class="mensaje-error" id="region-avistamiento-error"></span>
+      </p>
+
+      <p>
+        <label for="comuna-avistamiento">Comuna *</label><br>
+        <select id="comuna-avistamiento" name="comuna-avistamiento" disabled onchange="validarCampoComunaAvistamiento();">
+          <option value="" selected disabled>Seleccione comuna</option>
+        </select>
+        <br><span class="mensaje-error" id="comuna-avistamiento-error"></span>
+      </p>
+
+      <p>
+        <label for="lugar-detalle">Lugar específico (opcional)</label><br>
+        <input type="text" id="lugar-detalle" name="lugar-detalle" placeholder="Ej: Parque Nacional, sector laguna">
+      </p>
+
+      <p>
+        <label for="fecha">Fecha del avistamiento *</label><br>
+        <input type="date" id="fecha" name="fecha" onchange="validarCampoFecha();">
+        <br><span class="texto-ayuda">No puede ser una fecha futura ni de hace más de 5 años.</span>
+        <br><span class="mensaje-error" id="fecha-error"></span>
+      </p>
+
+      <p>
+        <label for="hora">Hora del avistamiento (formato HH:MM) *</label><br>
+        <input type="text" id="hora" name="hora" placeholder="14:30" onblur="validarCampoHora();">
+        <br><span class="mensaje-error" id="hora-error"></span>
+      </p>
+
+      <h2>Evidencia</h2>
+      <p class="texto-ayuda">Debes adjuntar al menos una foto o un video del avistamiento.</p>
+
+      <p>
+        <label for="foto">Foto (opcional si adjuntas video)</label><br>
+        <input type="file" id="foto" name="foto" accept="image/*" onchange="validarCampoEvidencia();">
+      </p>
+
+      <p>
+        <label for="video">Video (opcional si adjuntas foto)</label><br>
+        <input type="file" id="video" name="video" accept="video/*" onchange="validarCampoEvidencia();">
+      </p>
+
+      <p><span class="mensaje-error" id="evidencia-error"></span></p>
+
+      <h2>Notas adicionales</h2>
+
+      <p>
+        <label for="descripcion">Descripción (opcional)</label><br>
+        <input type="text" id="descripcion" name="descripcion">
+      </p>
+
+      <p>
+        <input type="submit" value="Enviar avistamiento" class="boton">
+        <input type="reset" value="Limpiar formulario" class="boton boton-secundario">
+      </p>
+
+      <p class="mensaje-resultado" id="resultado-avistamiento"></p>
+    </form>
+  </main>
+
+  <footer>
+    <p>Prototipo desarrollado para la Tarea 1 del curso CC5002 - Desarrollo de Aplicaciones Web.</p>
+  </footer>
+
+  <script src="js/regiones.js"></script>
+  <script src="js/validaciones.js"></script>
+  <script src="js/datos-ejemplo.js"></script>
+  <script src="js/avistamiento.js"></script>
+</body>
+</html>

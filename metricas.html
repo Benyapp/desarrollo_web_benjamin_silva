@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Métricas - Avistamientos de Aves</title>
+  <link rel="stylesheet" href="css/estilos.css">
+</head>
+<body>
+
+  <header>
+    <h1><a href="index.html">Avistamientos de Aves de Chile</a></h1>
+    <nav>
+      <ul>
+        <li><a href="index.html">Inicio</a></li>
+        <li><a href="registro.html">Registro de voluntario</a></li>
+        <li><a href="avistamiento.html">Informar avistamiento</a></li>
+        <li><a href="listado.html">Listado de avistamientos</a></li>
+        <li><a href="metricas.html">Métricas</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <h1>Indicadores y métricas</h1>
+    <p class="texto-ayuda">
+      Cifras calculadas a partir de datos de ejemplo, solo para efectos del prototipo.
+    </p>
+
+    <section>
+      <h2>Resumen general</h2>
+
+      <article class="tarjeta">
+        <h2>Voluntarios registrados</h2>
+        <p class="metrica-numero" id="total-voluntarios">0</p>
+      </article>
+
+      <article class="tarjeta">
+        <h2>Avistamientos registrados</h2>
+        <p class="metrica-numero" id="total-avistamientos">0</p>
+      </article>
+
+      <article class="tarjeta">
+        <h2>Aves observadas (suma)</h2>
+        <p class="metrica-numero" id="total-aves-observadas">0</p>
+      </article>
+
+      <article class="tarjeta">
+        <h2>Promedio avistamientos por voluntario</h2>
+        <p class="metrica-numero" id="promedio-avistamientos">0</p>
+      </article>
+    </section>
+
+    <section>
+      <h2>Avistamientos por tipo de ave</h2>
+      <div id="grafico-tipo-ave"></div>
+    </section>
+
+    <section>
+      <h2>Voluntarios registrados por región</h2>
+      <div id="grafico-voluntarios-region"></div>
+    </section>
+  </main>
+
+  <footer>
+    <p>Prototipo desarrollado para la Tarea 1 del curso CC5002 - Desarrollo de Aplicaciones Web.</p>
+  </footer>
+
+  <script src="js/datos-ejemplo.js"></script>
+  <script src="js/metricas.js"></script>
+</body>
+</html>

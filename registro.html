@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Registro de voluntario - Avistamientos de Aves</title>
+  <link rel="stylesheet" href="css/estilos.css">
+</head>
+<body>
+
+  <header>
+    <h1><a href="index.html">Avistamientos de Aves de Chile</a></h1>
+    <nav>
+      <ul>
+        <li><a href="index.html">Inicio</a></li>
+        <li><a href="registro.html">Registro de voluntario</a></li>
+        <li><a href="avistamiento.html">Informar avistamiento</a></li>
+        <li><a href="listado.html">Listado de avistamientos</a></li>
+        <li><a href="metricas.html">Métricas</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <h1>Registro de voluntario(a)</h1>
+    <p>
+      Los campos marcados con * son obligatorios. El resto de la información es opcional.
+    </p>
+
+    <form name="registro" onsubmit="return validarRegistro();">
+
+      <h2>Datos personales</h2>
+
+      <p>
+        <label for="nombres">Nombres *</label><br>
+        <input type="text" id="nombres" name="nombres" onblur="validarCampoNombres();">
+        <br><span class="mensaje-error" id="nombres-error"></span>
+      </p>
+
+      <p>
+        <label for="apellidos">Apellidos *</label><br>
+        <input type="text" id="apellidos" name="apellidos" onblur="validarCampoApellidos();">
+        <br><span class="mensaje-error" id="apellidos-error"></span>
+      </p>
+
+      <p>
+        <label for="fecha-nacimiento">Fecha de nacimiento (opcional)</label><br>
+        <input type="date" id="fecha-nacimiento" name="fecha-nacimiento" onchange="validarCampoFechaNacimiento();">
+        <br><span class="texto-ayuda">Debe ser mayor de 12 años para registrarse como voluntario(a).</span>
+        <br><span class="mensaje-error" id="fecha-nacimiento-error"></span>
+      </p>
+
+      <h2>Datos de contacto</h2>
+
+      <p>
+        <label for="email">Correo electrónico *</label><br>
+        <input type="email" id="email" name="email" onblur="validarCampoEmail();" placeholder="nombre@correo.cl">
+        <br><span class="mensaje-error" id="email-error"></span>
+      </p>
+
+      <p>
+        <label for="celular">Celular *</label><br>
+        <input type="text" id="celular" name="celular" onblur="validarCampoCelular();" placeholder="+56 9 1234 5678">
+        <br><span class="texto-ayuda">Formato chileno, ej: +56 9 1234 5678.</span>
+        <br><span class="mensaje-error" id="celular-error"></span>
+      </p>
+
+      <h2>Dirección postal</h2>
+
+      <p>
+        <label for="region">Región *</label><br>
+        <select id="region" name="region" onchange="actualizarComunas('region','comuna'); validarCampoRegion();">
+          <option value="" selected disabled>Seleccione región</option>
+        </select>
+        <br><span class="mensaje-error" id="region-error"></span>
+      </p>
+
+      <p>
+        <label for="comuna">Comuna *</label><br>
+        <select id="comuna" name="comuna" disabled onchange="validarCampoComuna();">
+          <option value="" selected disabled>Seleccione comuna</option>
+        </select>
+        <br><span class="mensaje-error" id="comuna-error"></span>
+      </p>
+
+      <p>
+        <label for="direccion">Calle y número (opcional)</label><br>
+        <input type="text" id="direccion" name="direccion" placeholder="Ej: Av. Siempre Viva 742">
+      </p>
+
+      <h2>Información adicional</h2>
+
+      <p>
+        <label for="motivacion">¿Por qué te interesa participar? (opcional)</label><br>
+        <input type="text" id="motivacion" name="motivacion">
+      </p>
+
+      <p>
+        <input type="submit" value="Registrarme" class="boton">
+        <input type="reset" value="Limpiar formulario" class="boton boton-secundario">
+      </p>
+
+      <p class="mensaje-resultado" id="resultado-registro"></p>
+    </form>
+  </main>
+
+  <footer>
+    <p>Prototipo desarrollado para la Tarea 1 del curso CC5002 - Desarrollo de Aplicaciones Web.</p>
+  </footer>
+
+  <script src="js/regiones.js"></script>
+  <script src="js/validaciones.js"></script>
+  <script src="js/registro.js"></script>
+</body>
+</html>

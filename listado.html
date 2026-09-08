@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Listado de avistamientos - Avistamientos de Aves</title>
+  <link rel="stylesheet" href="css/estilos.css">
+</head>
+<body>
+
+  <header>
+    <h1><a href="index.html">Avistamientos de Aves de Chile</a></h1>
+    <nav>
+      <ul>
+        <li><a href="index.html">Inicio</a></li>
+        <li><a href="registro.html">Registro de voluntario</a></li>
+        <li><a href="avistamiento.html">Informar avistamiento</a></li>
+        <li><a href="listado.html">Listado de avistamientos</a></li>
+        <li><a href="metricas.html">Métricas</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <h1>Listado de avistamientos</h1>
+    <p class="texto-ayuda">
+      Datos de ejemplo para efectos del prototipo (en el sistema real corresponderían
+      a los avistamientos informados por los voluntarios).
+    </p>
+
+    <div class="controles-listado">
+      <p>
+        <label for="filtro-tipo">Filtrar por tipo de ave</label><br>
+        <select id="filtro-tipo" onchange="renderizarTabla();">
+          <option value="">Todos los tipos</option>
+        </select>
+      </p>
+
+      <p>
+        <label for="orden-campo">Ordenar por</label><br>
+        <select id="orden-campo" onchange="renderizarTabla();">
+          <option value="fecha">Fecha de avistamiento</option>
+          <option value="lugar">Lugar (región/comuna)</option>
+        </select>
+      </p>
+
+      <p>
+        <label for="orden-direccion">Dirección</label><br>
+        <select id="orden-direccion" onchange="renderizarTabla();">
+          <option value="desc">De mayor a menor</option>
+          <option value="asc">De menor a mayor</option>
+        </select>
+      </p>
+
+      <p>
+        <label for="tamano-pagina">Resultados por página</label><br>
+        <select id="tamano-pagina" onchange="renderizarTabla();">
+          <option value="5">5</option>
+          <option value="10" selected>10</option>
+          <option value="20">20</option>
+        </select>
+      </p>
+    </div>
+
+    <div class="tabla-contenedor">
+      <table>
+        <caption>Avistamientos registrados</caption>
+        <thead>
+          <tr>
+            <th>Tipo</th>
+            <th>Ave</th>
+            <th>Lugar</th>
+            <th>Fecha</th>
+            <th>Hora</th>
+            <th>Cantidad</th>
+          </tr>
+        </thead>
+        <tbody id="cuerpo-tabla"></tbody>
+      </table>
+    </div>
+
+    <p id="sin-resultados" class="texto-ayuda" hidden>No hay avistamientos que coincidan con el filtro seleccionado.</p>
+
+    <p class="paginacion">
+      <button type="button" id="pagina-anterior" class="boton boton-secundario" onclick="irPaginaAnterior();">Anterior</button>
+      <span id="indicador-pagina">Página 1 de 1</span>
+      <button type="button" id="pagina-siguiente" class="boton boton-secundario" onclick="irPaginaSiguiente();">Siguiente</button>
+    </p>
+  </main>
+
+  <footer>
+    <p>Prototipo desarrollado para la Tarea 1 del curso CC5002 - Desarrollo de Aplicaciones Web.</p>
+  </footer>
+
+  <script src="js/datos-ejemplo.js"></script>
+  <script src="js/listado.js"></script>
+</body>
+</html>
