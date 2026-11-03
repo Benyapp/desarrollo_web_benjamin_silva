@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block titulo %}{% endblock %} - Avistamientos de Aves</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/estilos.css') }}">
+</head>
+<body>
+
+  <header>
+    <p class="titulo-sitio"><a href="{{ url_for('inicio') }}">Avistamientos de Aves de Chile</a></p>
+    <nav>
+      <ul>
+        <li><a href="{{ url_for('inicio') }}">Inicio</a></li>
+        <li><a href="{{ url_for('registrar_voluntario') }}">Registrar voluntario</a></li>
+        <li><a href="{{ url_for('registrar_avistamiento') }}">Informar avistamiento</a></li>
+        <li><a href="{{ url_for('listado_avistamientos') }}">Listado de avistamientos</a></li>
+        <li><a href="{{ url_for('estadisticas') }}">Estadísticas</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    {% for categoria, mensaje in get_flashed_messages(with_categories=true) %}
+    <p class="mensaje-resultado mensaje-{{ categoria }}">{{ mensaje }}</p>
+    {% endfor %}
+    {% block contenido %}{% endblock %}
+  </main>
+
+  <footer>
+    <p>Tarea 3 del curso CC5002 - Desarrollo de Aplicaciones Web - Benjamín Silva.</p>
+  </footer>
+
+  {% block scripts %}{% endblock %}
+</body>
+</html>

@@ -1,0 +1,74 @@
+{% extends "base.html" %}
+{% block titulo %}Registrar voluntario{% endblock %}
+{% block contenido %}
+<h1>Registro de voluntario(a)</h1>
+<p>Todos los campos son obligatorios.</p>
+
+<form name="registro" method="post" action="{{ url_for('registrar_voluntario') }}" onsubmit="return validarRegistro();">
+  {% if errores %}
+  <p class="mensaje-resultado mensaje-error-formulario">{{ errores.general or "Hay errores en el formulario. Revisa los campos marcados en rojo." }}</p>
+  {% endif %}
+
+  <h2>Datos personales</h2>
+
+  <p>
+    <label for="nombres">Nombres *</label><br>
+    <input type="text" id="nombres" name="nombres" value="{{ form.nombres }}" maxlength="100" onblur="validarCampoNombres();">
+    <br><span class="mensaje-error" id="nombres-error">{{ errores.nombres }}</span>
+  </p>
+
+  <p>
+    <label for="apellidos">Apellidos *</label><br>
+    <input type="text" id="apellidos" name="apellidos" value="{{ form.apellidos }}" maxlength="100" onblur="validarCampoApellidos();">
+    <br><span class="mensaje-error" id="apellidos-error">{{ errores.apellidos }}</span>
+  </p>
+
+  <h2>Datos de contacto</h2>
+
+  <p>
+    <label for="email">Correo electrónico *</label><br>
+    <input type="email" id="email" name="email" value="{{ form.email }}" maxlength="80" onblur="validarCampoEmail();" placeholder="nombre@correo.cl">
+    <br><span class="mensaje-error" id="email-error">{{ errores.email }}</span>
+  </p>
+
+  <p>
+    <label for="celular">Celular *</label><br>
+    <input type="text" id="celular" name="celular" value="{{ form.celular }}" maxlength="20" onblur="validarCampoCelular();" placeholder="+56 9 1234 5678">
+    <br><span class="texto-ayuda">Formato chileno, ej: +56 9 1234 5678.</span>
+    <br><span class="mensaje-error" id="celular-error">{{ errores.celular }}</span>
+  </p>
+
+  <h2>Dirección postal</h2>
+
+  <p>
+    <label for="region">Región *</label><br>
+    <select id="region" name="region" onchange="actualizarComunas('region','comuna'); validarCampoRegion();">
+      <option value="" selected disabled>Seleccione región</option>
+    </select>
+    <br><span class="mensaje-error" id="region-error">{{ errores.region }}</span>
+  </p>
+
+  <p>
+    <label for="comuna">Comuna *</label><br>
+    <select id="comuna" name="comuna" disabled onchange="validarCampoComuna();">
+      <option value="" selected disabled>Seleccione comuna</option>
+    </select>
+    <br><span class="mensaje-error" id="comuna-error">{{ errores.comuna }}</span>
+  </p>
+
+  <p>
+    <input type="submit" value="Registrarme" class="boton">
+    <input type="reset" value="Limpiar formulario" class="boton boton-secundario">
+  </p>
+</form>
+{% endblock %}
+{% block scripts %}
+<script>
+  var REGIONES = {{ regiones|tojson }};
+  var REGION_SELECCIONADA = {{ form.region|tojson }};
+  var COMUNA_SELECCIONADA = {{ form.comuna|tojson }};
+</script>
+<script src="{{ url_for('static', filename='js/regiones.js') }}"></script>
+<script src="{{ url_for('static', filename='js/validaciones.js') }}"></script>
+<script src="{{ url_for('static', filename='js/registro.js') }}"></script>
+{% endblock %}

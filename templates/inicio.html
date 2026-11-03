@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block titulo %}Inicio{% endblock %}
+{% block contenido %}
+<h1>Bienvenido(a) al registro de avistamientos de aves</h1>
+<p>
+  La Unión de Ornitólogos de Chile mantiene este registro para detectar cambios en la población
+  de aves asociados a fenómenos climáticos. Regístrate como voluntario(a) e informa tus avistamientos.
+</p>
+
+<section>
+  <h2>¿Qué puedes hacer?</h2>
+  <p>
+    <a class="boton" href="{{ url_for('registrar_voluntario') }}">Registrar voluntario</a>
+    <a class="boton" href="{{ url_for('registrar_avistamiento') }}">Informar avistamiento</a>
+    <a class="boton" href="{{ url_for('estadisticas') }}">Estadísticas</a>
+  </p>
+</section>
+
+<section>
+  <h2>Últimos avistamientos</h2>
+  {% for a in ultimos %}
+  <article class="tarjeta">
+    <h3><a href="{{ url_for('detalle_avistamiento', id=a.id) }}">{{ a.ave.nombre }}</a></h3>
+    <ul class="resumen">
+      <li><strong>Lugar:</strong> {{ a.lugar }}</li>
+      <li><strong>Fecha y hora:</strong> {{ a.fecha_hora.strftime('%d-%m-%Y %H:%M') }}</li>
+      <li><strong>Informado por:</strong> {{ a.voluntario.nombre }}</li>
+      <li><strong>Archivos adjuntos:</strong> {{ a.registros|length }}</li>
+    </ul>
+  </article>
+  {% else %}
+  <p class="texto-ayuda">Aún no hay avistamientos registrados.</p>
+  {% endfor %}
+  <p><a href="{{ url_for('listado_avistamientos') }}">Ver listado completo de avistamientos</a></p>
+</section>
+{% endblock %}

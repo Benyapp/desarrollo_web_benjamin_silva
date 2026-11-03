@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block titulo %}Estadísticas{% endblock %}
+{% block contenido %}
+<h1>Estadísticas</h1>
+<p class="texto-ayuda">Los gráficos se generan con los datos actuales de la base de datos.</p>
+
+<section>
+  <h2>Avistamientos por día</h2>
+  <div id="grafico-dias" class="grafico" data-url="{{ url_for('datos_avistamientos_por_dia') }}">
+    <p class="texto-ayuda">Cargando gráfico...</p>
+  </div>
+</section>
+
+<section>
+  <h2>Avistamientos por ave</h2>
+  <div id="grafico-aves" class="grafico" data-url="{{ url_for('datos_avistamientos_por_ave') }}">
+    <p class="texto-ayuda">Cargando gráfico...</p>
+  </div>
+</section>
+
+<section>
+  <h2>Voluntarios por comuna</h2>
+  <div id="grafico-comunas" class="grafico" data-url="{{ url_for('datos_voluntarios_por_comuna') }}">
+    <p class="texto-ayuda">Cargando gráfico...</p>
+  </div>
+</section>
+
+<p><a class="boton boton-secundario" href="{{ url_for('inicio') }}">Volver a la portada</a></p>
+{% endblock %}
+{% block scripts %}
+<script src="https://code.highcharts.com/11.4.8/highcharts.js"></script>
+<script src="{{ url_for('static', filename='js/estadisticas.js') }}"></script>
+{% endblock %}

@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block titulo %}Voluntario registrado{% endblock %}
+{% block contenido %}
+<h1>¡Registro exitoso!</h1>
+<p class="mensaje-resultado mensaje-exito">
+  Gracias {{ voluntario.nombre }}, quedaste registrado(a) como voluntario(a).
+</p>
+<p>¿Quieres informar un avistamiento ahora?</p>
+<p>
+  <a class="boton" href="{{ url_for('registrar_avistamiento', voluntario=voluntario.id) }}">Registrar un avistamiento</a>
+  <a class="boton boton-secundario" href="{{ url_for('inicio') }}">Ir a la página de inicio</a>
+</p>
+{% endblock %}

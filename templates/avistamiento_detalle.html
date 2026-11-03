@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+{% block titulo %}Avistamiento de {{ a.ave.nombre }}{% endblock %}
+{% block contenido %}
+<h1>Avistamiento de {{ a.ave.nombre }}</h1>
+
+<section>
+  <h2>Información</h2>
+  <dl>
+    <dt>Ave</dt>
+    <dd>{{ a.ave.nombre }}</dd>
+    <dt>Lugar</dt>
+    <dd>{{ a.lugar }}</dd>
+    <dt>Fecha y hora</dt>
+    <dd>{{ a.fecha_hora.strftime('%d-%m-%Y %H:%M') }}</dd>
+    <dt>Informado por</dt>
+    <dd>{{ a.voluntario.nombre }} ({{ a.voluntario.comuna.nombre }}, {{ a.voluntario.comuna.region.nombre|trim }})</dd>
+    <dt>Descripción</dt>
+    <dd>{{ a.descripcion or "Sin descripción." }}</dd>
+  </dl>
+</section>
+
+<section>
+  <h2>Fotos y videos</h2>
+  {% for f in fotos %}
+  <figure>
+    <img src="{{ url_for('static', filename=f.ruta_archivo) }}" alt="Foto del avistamiento: {{ f.nombre_archivo }}">
+    <figcaption>{{ f.nombre_archivo }}</figcaption>
+  </figure>
+  {% endfor %}
+  {% for v in videos %}
+  <figure>
+    <video controls src="{{ url_for('static', filename=v.ruta_archivo) }}"></video>
+    <figcaption>{{ v.nombre_archivo }}</figcaption>
+  </figure>
+  {% endfor %}
+  {% if not fotos and not videos %}
+  <p class="texto-ayuda">Este avistamiento no tiene archivos.</p>
+  {% endif %}
+</section>
+
+<section id="comentarios" data-url="{{ url_for('listar_comentarios', id=a.id) }}">
+  <h2>Comentarios</h2>
+
+  <form name="comentario" id="form-comentario" class="form-comentario" method="post" action="{{ url_for('agregar_comentario', id=a.id) }}" novalidate>
+    <h3>Agregar comentario</h3>
+    <p id="comentario-mensaje" class="mensaje-resultado oculto"></p>
+    <p>
+      <label for="nombre">Nombre *</label><br>
+      <input type="text" id="nombre" name="nombre" maxlength="50" placeholder="Entre 3 y 50 caracteres">
+      <br><span class="mensaje-error" id="nombre-error"></span>
+    </p>
+    <p>
+      <label for="texto">Comentario *</label><br>
+      <textarea id="texto" name="texto" rows="3" cols="40" maxlength="300" placeholder="Al menos 5 caracteres"></textarea>
+      <br><span class="mensaje-error" id="texto-error"></span>
+    </p>
+    <p><button type="submit" class="boton" id="boton-comentario">Agregar comentario</button></p>
+  </form>
+
+  <h3>Comentarios publicados</h3>
+  <ul id="lista-comentarios" class="lista-comentarios">
+    <li class="texto-ayuda">Cargando comentarios...</li>
+  </ul>
+</section>
+
+<p><a class="boton boton-secundario" href="{{ url_for('listado_avistamientos') }}">Volver al listado</a></p>
+{% endblock %}
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/comentarios.js') }}"></script>
+{% endblock %}

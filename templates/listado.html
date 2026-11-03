@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% block titulo %}Listado de avistamientos{% endblock %}
+{% block contenido %}
+<h1>Listado de avistamientos</h1>
+<p class="texto-ayuda">Haz clic en una fila para ver el detalle del avistamiento.</p>
+
+<div class="tabla-contenedor">
+  <table>
+    <caption>Avistamientos registrados ({{ total }})</caption>
+    <thead>
+      <tr>
+        <th>Ave</th>
+        <th>Lugar</th>
+        <th>Fecha y hora</th>
+        <th>Voluntario</th>
+        <th>Archivos</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for a in avistamientos %}
+      <tr class="fila-clic" onclick="window.location.href = '{{ url_for('detalle_avistamiento', id=a.id) }}';">
+        <td><a href="{{ url_for('detalle_avistamiento', id=a.id) }}">{{ a.ave.nombre }}</a></td>
+        <td>{{ a.lugar }}</td>
+        <td>{{ a.fecha_hora.strftime('%d-%m-%Y %H:%M') }}</td>
+        <td>{{ a.voluntario.nombre }}</td>
+        <td>{{ a.registros|length }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+
+{% if total == 0 %}
+<p class="texto-ayuda">Aún no hay avistamientos registrados.</p>
+{% endif %}
+
+<p class="paginacion">
+  {% if pagina > 1 %}
+  <a class="boton boton-secundario" href="{{ url_for('listado_avistamientos', pagina=pagina - 1) }}">Anterior</a>
+  {% endif %}
+  <span>Página {{ pagina }} de {{ total_paginas }}</span>
+  {% if pagina < total_paginas %}
+  <a class="boton boton-secundario" href="{{ url_for('listado_avistamientos', pagina=pagina + 1) }}">Siguiente</a>
+  {% endif %}
+</p>
+{% endblock %}

@@ -1,0 +1,98 @@
+{% extends "base.html" %}
+{% block titulo %}Informar avistamiento{% endblock %}
+{% block contenido %}
+<h1>Informar un avistamiento</h1>
+<p>
+  Esta sección es exclusiva para voluntarios(as) ya registrados(as)
+  (ver <a href="{{ url_for('registrar_voluntario') }}">registro de voluntario</a>).
+  Los campos marcados con * son obligatorios.
+</p>
+
+<form name="avistamiento" method="post" enctype="multipart/form-data" action="{{ url_for('registrar_avistamiento') }}" onsubmit="return validarAvistamiento();">
+  {% if errores %}
+  <p class="mensaje-resultado mensaje-error-formulario">{{ errores.general or "Hay errores en el formulario. Revisa los campos marcados en rojo." }}</p>
+  {% endif %}
+
+  <h2>Voluntario</h2>
+
+  <p>
+    <label for="voluntario">Voluntario(a) *</label><br>
+    <select id="voluntario" name="voluntario" onchange="validarCampoVoluntario();">
+      <option value="" disabled {% if not form.voluntario %}selected{% endif %}>Seleccione voluntario</option>
+      {% for v in voluntarios %}
+      <option value="{{ v.id }}" {% if form.voluntario == v.id|string %}selected{% endif %}>{{ v.nombre }} ({{ v.email }})</option>
+      {% endfor %}
+    </select>
+    <br><span class="mensaje-error" id="voluntario-error">{{ errores.voluntario }}</span>
+  </p>
+
+  <h2>Datos del ave</h2>
+
+  <p>
+    <label for="ave">Ave *</label><br>
+    <select id="ave" name="ave" onchange="validarCampoAve();">
+      <option value="" disabled {% if not form.ave %}selected{% endif %}>Seleccione ave</option>
+      {% for a in aves %}
+      <option value="{{ a.id }}" {% if form.ave == a.id|string %}selected{% endif %}>{{ a.nombre }}</option>
+      {% endfor %}
+    </select>
+    <br><span class="mensaje-error" id="ave-error">{{ errores.ave }}</span>
+  </p>
+
+  <h2>Lugar y momento del avistamiento</h2>
+
+  <p>
+    <label for="lugar">Lugar *</label><br>
+    <input type="text" id="lugar" name="lugar" value="{{ form.lugar }}" maxlength="200" onblur="validarCampoLugar();" placeholder="Ej: Puerto Varas, Región de Los Lagos">
+    <br><span class="mensaje-error" id="lugar-error">{{ errores.lugar }}</span>
+  </p>
+
+  <p>
+    <label for="fecha">Fecha del avistamiento *</label><br>
+    <input type="date" id="fecha" name="fecha" value="{{ form.fecha }}" onchange="validarCampoFecha();">
+    <br><span class="texto-ayuda">No puede ser una fecha futura ni de hace más de 5 años.</span>
+    <br><span class="mensaje-error" id="fecha-error">{{ errores.fecha }}</span>
+  </p>
+
+  <p>
+    <label for="hora">Hora del avistamiento (formato HH:MM) *</label><br>
+    <input type="text" id="hora" name="hora" value="{{ form.hora }}" maxlength="5" placeholder="14:30" onblur="validarCampoHora();">
+    <br><span class="mensaje-error" id="hora-error">{{ errores.hora }}</span>
+  </p>
+
+  <h2>Evidencia</h2>
+  <p class="texto-ayuda">
+    Debes adjuntar al menos una foto o un video (máximo 5 de cada tipo). Fotos: jpg, png, gif, webp (hasta 5 MB).
+    Videos: mp4, webm, mov (hasta 30 MB).
+  </p>
+
+  <p>
+    <label for="fotos">Fotos</label><br>
+    <input type="file" id="fotos" name="fotos" accept="image/*" multiple onchange="validarCampoEvidencia();">
+  </p>
+
+  <p>
+    <label for="videos">Videos</label><br>
+    <input type="file" id="videos" name="videos" accept="video/*" multiple onchange="validarCampoEvidencia();">
+  </p>
+
+  <p><span class="mensaje-error" id="evidencia-error">{{ errores.evidencia }}</span></p>
+
+  <h2>Notas adicionales</h2>
+
+  <p>
+    <label for="descripcion">Descripción (opcional)</label><br>
+    <textarea id="descripcion" name="descripcion" rows="4" maxlength="500" onblur="validarCampoDescripcion();">{{ form.descripcion }}</textarea>
+    <br><span class="mensaje-error" id="descripcion-error">{{ errores.descripcion }}</span>
+  </p>
+
+  <p>
+    <input type="submit" value="Enviar avistamiento" class="boton">
+    <input type="reset" value="Limpiar formulario" class="boton boton-secundario">
+  </p>
+</form>
+{% endblock %}
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/validaciones.js') }}"></script>
+<script src="{{ url_for('static', filename='js/avistamiento.js') }}"></script>
+{% endblock %}
