@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Buscador de avistamientos - Avistamientos de Aves</title>
+  <link rel="stylesheet" href="/css/estilos.css" th:href="@{/css/estilos.css}">
+</head>
+<body>
+
+  <header>
+    <p class="titulo-sitio"><a href="/" th:href="@{/}">Avistamientos de Aves de Chile</a></p>
+    <nav>
+      <ul>
+        <li><a href="/" th:href="@{/}">Buscador de avistamientos</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <h1>Buscador de avistamientos</h1>
+
+    <form id="form-buscador" class="form-buscador" role="search" action="#">
+      <p>
+        <label for="busqueda">Buscar por ave, voluntario o comuna</label><br>
+        <input type="text" id="busqueda" name="q" maxlength="100" autocomplete="off"
+               placeholder="Ej: Cóndor, María, Ñuñoa">
+      </p>
+      <p class="texto-ayuda">Los resultados aparecen automáticamente mientras escribes.</p>
+    </form>
+
+    <section id="resultados" aria-live="polite">
+      <h2>Resultados</h2>
+      <p id="estado-busqueda" class="texto-ayuda">Escribe algo en el buscador para ver avistamientos.</p>
+      <div id="tabla-resultados" class="tabla-contenedor oculto">
+        <table>
+          <caption id="titulo-tabla">Avistamientos encontrados</caption>
+          <thead>
+            <tr>
+              <th>Voluntario</th>
+              <th>Día</th>
+              <th>Ave</th>
+              <th>Comuna</th>
+              <th>Nota</th>
+              <th>Evaluar</th>
+            </tr>
+          </thead>
+          <tbody id="cuerpo-resultados"></tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+
+  <dialog id="dialogo-nota" class="dialogo-nota" aria-labelledby="titulo-dialogo">
+    <form id="form-nota" method="dialog">
+      <h2 id="titulo-dialogo">Evaluar avistamiento</h2>
+      <p id="detalle-dialogo" class="texto-ayuda"></p>
+      <fieldset class="opciones-nota">
+        <legend>Selecciona una nota entre 1 y 7</legend>
+        <label><input type="radio" name="nota" value="1"> 1</label>
+        <label><input type="radio" name="nota" value="2"> 2</label>
+        <label><input type="radio" name="nota" value="3"> 3</label>
+        <label><input type="radio" name="nota" value="4"> 4</label>
+        <label><input type="radio" name="nota" value="5"> 5</label>
+        <label><input type="radio" name="nota" value="6"> 6</label>
+        <label><input type="radio" name="nota" value="7"> 7</label>
+      </fieldset>
+      <p id="error-nota" class="mensaje-error"></p>
+      <p>
+        <button type="submit" class="boton" id="boton-guardar-nota">Guardar nota</button>
+        <button type="button" class="boton boton-secundario" id="boton-cancelar-nota">Cancelar</button>
+      </p>
+    </form>
+  </dialog>
+
+  <footer>
+    <p>Tarea 4 del curso CC5002 - Desarrollo de Aplicaciones Web - Benjamín Silva.</p>
+  </footer>
+
+  <script src="/js/buscador.js" th:src="@{/js/buscador.js}"></script>
+</body>
+</html>
